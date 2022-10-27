@@ -10,11 +10,16 @@ menu = [
 
 
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.order_by('-time_create')[1:5]
+    featured = Post.objects.get(pk=7)
     context = {
         'title': 'PET Blog',
         'menu': menu,
-        'posts': posts
+        'post1': posts[0],
+        'post2': posts[1],
+        'post3': posts[2],
+        'post4': posts[3],
+        'featured': featured
     }
     return render(request, 'blog/index.html', context=context)
 
@@ -43,5 +48,12 @@ def login(request):
     return render(request, 'blog/login.html', context=context)
 
 
-def page(request):
-    return render(request, 'blog/blogpage.html')
+def show_post(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    context = {
+        'title': post.title,
+        'menu': menu,
+        'post': post,
+
+    }
+    return render(request, 'blog/blogpage.html', context=context)
