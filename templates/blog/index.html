@@ -39,7 +39,7 @@
                                               src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..."/></a>
                             <div class="card-body">
                                 <div class="small text-muted">{{ post1.time_create | date:"j M Y" }}</div>
-                                <h2 class="card-title h4">{{ post1.title | truncatechars:18}}</h2>
+                                <h2 class="card-title h4">{{ post1.title | truncatechars:18 }}</h2>
                                 <p class="card-text">{{ post1.text | truncatechars:250 }}</p>
                                 <a class="btn btn-primary" href="{{ post1.get_absolute_url }}">Read more →</a>
                             </div>
@@ -111,6 +111,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- Categories widget-->
                 <div class="card mb-4">
                     <div class="card-header">Categories</div>
@@ -118,21 +119,23 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <ul class="list-unstyled mb-0">
-                                    <li><a href="#!">Web Design</a></li>
-                                    <li><a href="#!">HTML</a></li>
-                                    <li><a href="#!">Freebies</a></li>
+                                    {% for cat in categories_1 %}
+                                    <li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                             <div class="col-sm-6">
                                 <ul class="list-unstyled mb-0">
-                                    <li><a href="#!">JavaScript</a></li>
-                                    <li><a href="#!">CSS</a></li>
-                                    <li><a href="#!">Tutorials</a></li>
+                                    {% for cat in categories_2 %}
+                                    <li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
                 <!-- Side widget-->
                 <div class="card mb-4">
                     <div class="card-header">Side Widget</div>
