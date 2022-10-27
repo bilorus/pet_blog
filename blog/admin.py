@@ -9,5 +9,11 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ['title', 'text']
 
 
+class CategoriesAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name']
+    list_display_links = ['id', 'name']
+    search_fields = ['name']
+
+
 admin.site.register(Post, PostAdmin)
-admin.site.register(Category)
+admin.site.register(Category, CategoriesAdmin)

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import *
 
 menu = [
     {'title': 'PET Blog', 'url_name': 'home'},
@@ -9,9 +10,11 @@ menu = [
 
 
 def index(request):
+    posts = Post.objects.all()
     context = {
         'title': 'PET Blog',
-        'menu': menu
+        'menu': menu,
+        'posts': posts
     }
     return render(request, 'blog/index.html', context=context)
 

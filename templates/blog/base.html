@@ -26,23 +26,17 @@
             {% block navbar %}
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     {% for m in menu %}
-                        {% if  title != m.title  %}
-                        <li class="nav-item"><a class="nav-link" href="{% url m.url_name %}">{{ m.title }}</a></li>
+                        {% if  title != m.title %}
+                            <li class="nav-item"><a class="nav-link" href="{% url m.url_name %}">{{ m.title }}</a></li>
                         {% else %}
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url m.url_name %}">{{ m.title }}</a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                                    href="{% url m.url_name %}">{{ m.title }}</a></li>
                         {% endif %}
 
                     {% endfor %}
 
                 </ul>
             {% endblock %}
-
-            {#            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">#}
-{#                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>#}
-{#                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>#}
-{#                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>#}
-{#                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Log in</a></li>#}
-{#            </ul>#}
         </div>
     </div>
 </nav>
@@ -52,7 +46,7 @@
 {% endblock %}
 
 
-{% block page_blog %}
+{% block page_content %}
     <!-- Page content-->
 {% endblock %}
 
