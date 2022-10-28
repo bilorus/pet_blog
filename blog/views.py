@@ -1,5 +1,3 @@
-from math import ceil
-
 from django.http import Http404
 from django.shortcuts import render
 
@@ -14,36 +12,29 @@ menu = [
 
 
 def index(request):
-    posts = Post.objects.order_by('-time_create')[:5]
-    indx_half_categories = ceil(len(Category.objects.all()) / 2)
-    categories_1half = Category.objects.all()[:indx_half_categories]
-    categories_2half = Category.objects.all()[indx_half_categories:]
+    posts = Post.objects.order_by('-time_create')
+    row_posts = [posts[1:][i:i + 2] for i in
+                 range(0, len(posts[1:]), 2)]  # Breaking posts into pairs first post for featured
     featured = posts[0]  # The newest post
 
     context = {
         'title': 'PET Blog',
         'menu': menu,
-        'post1': posts[1],
-        'post2': posts[2],
-        'post3': posts[3],
-        'post4': posts[4],
+        'row_posts': row_posts,
         'featured': featured,
-        'categories_1': categories_1half,
-        'categories_2': categories_2half
     }
     return render(request, 'blog/index.html', context=context)
 
 
 def category(request, cat_id):
     posts = Post.objects.filter(category=cat_id).order_by('-time_create')
+    row_posts = [posts[1:][i:i + 2] for i in range(0, len(posts[1:]), 2)]
+    featured = posts[0]
     context = {
         'title': 'PET Blog',
         'menu': menu,
-        'post1': posts[1],
-        'post2': posts[1],
-        'post3': posts[1],
-        'post4': posts[1],
-        'featured': posts[0],
+        'row_posts': row_posts,
+        'featured': featured,
     }
     if len(posts) == 0:
         raise Http404

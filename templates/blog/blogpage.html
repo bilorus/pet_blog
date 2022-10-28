@@ -15,10 +15,10 @@
                             <!-- Post meta content-->
                             <div class="text-muted fst-italic mb-2">Posted on {{ post.time_create | date:"j M Y" }} by Start Bootstrap</div>
                             <!-- Post categories-->
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ post.category }}</a>
+                            <a class="badge bg-secondary text-decoration-none link-light" href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
                         </header>
                         <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                        <figure class="mb-4"><img class="img-fluid rounded" src="{{ post.photo.url }}" alt="{{ post.title }}" /></figure>
                         <!-- Post content-->
                         <section class="mb-5">
                             <p class="fs-5 mb-4">{{ post.text | linebreaks }}</p>

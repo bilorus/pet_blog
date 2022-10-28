@@ -18,15 +18,17 @@
     <div class="container">
         <div class="row">
             <!-- Blog entries-->
+
             <div class="col-lg-8">
                 <!-- Featured blog post-->
                 <div class="card mb-4">
                     {% if featured.photo %}
-                        <a href="{{ featured.get_absolute_url }}"><img class="card-img-top" src="{{ featured.photo.url }}"
-                                      alt="{{ featured.title }}"/></a>
+                        <a href="{{ featured.get_absolute_url }}"><img class="card-img-top"
+                                                                       src="{{ featured.photo.url }}"
+                                                                       alt="{{ featured.title }}"/></a>
                     {% else %}
                         <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
-                                      alt="..."/></a>
+                                          alt="..."/></a>
                     {% endif %}
                     <div class="card-body">
                         <div class="small text-muted">{{ featured.time_create | date:"j M Y" }}</div>
@@ -38,76 +40,25 @@
 
                 <!-- Nested row for non-featured blog posts-->
                 <div class="row">
+                {% for row in row_posts %}
+                    {% for post in row %}
                     <div class="col-lg-6">
                         <!-- Blog post-->
                         <div class="card mb-4">
-                            {% if post1.photo %}
-                            <a href="{{ post1.get_absolute_url }}"><img class="card-img-top"
-                                              src="{{ post1.photo.url }}" alt="{{ post1.title }}"/></a>
-                            {% else %}
-                                <a href="#!"><img class="card-img-top"
-                                              src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..."/></a>
-                            {% endif %}
+                            <a href="{{ post.get_absolute_url }}"><img class="card-img-top"
+                                              src="{{ post.photo.url }}" alt="{{ post.title }}"/></a>
                             <div class="card-body">
-                                <div class="small text-muted">{{ post1.time_create | date:"j M Y" }}</div>
-                                <h2 class="card-title h4">{{ post1.title | truncatechars:18 }}</h2>
-                                <p class="card-text">{{ post1.text | truncatechars:250 }}</p>
-                                <a class="btn btn-primary" href="{{ post1.get_absolute_url }}">Read more →</a>
-                            </div>
-                        </div>
-                        <!-- Blog post-->
-                        <div class="card mb-4">
-                            {% if post2.photo %}
-                            <a href="{{ post1.get_absolute_url }}"><img class="card-img-top"
-                                              src="{{ post2.photo.url }}" alt="{{ post2.title }}"/></a>
-                            {% else %}
-                                <a href="#!"><img class="card-img-top"
-                                              src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..."/></a>
-                            {% endif %}
-                            <div class="card-body">
-                                <div class="small text-muted">{{ post2.time_create | date:"j M Y" }}</div>
-                                <h2 class="card-title h4">{{ post2.title | truncatechars:18 }}</h2>
-                                <p class="card-text">{{ post2.text | truncatechars:250 }}</p>
-                                <a class="btn btn-primary" href="{{ post2.get_absolute_url }}">Read more →</a>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-lg-6">
-                        <!-- Blog post-->
-                        <div class="card mb-4">
-                            {% if post3.photo %}
-                            <a href="{{ post3.get_absolute_url }}"><img class="card-img-top"
-                                              src="{{ post3.photo.url }}" alt="{{ post3.title }}"/></a>
-                            {% else %}
-                                <a href="#!"><img class="card-img-top"
-                                              src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..."/></a>
-                            {% endif %}
-                           <div class="card-body">
-                                <div class="small text-muted">{{ post3.time_create | date:"j M Y" }}</div>
-                                <h2 class="card-title h4">{{ post3.title | truncatechars:18 }}</h2>
-                                <p class="card-text">{{ post3.text | truncatechars:250 }}</p>
-                                <a class="btn btn-primary" href="{{ post3.get_absolute_url }}">Read more →</a>
-                            </div>
-                        </div>
-                        <!-- Blog post-->
-                        <div class="card mb-4">
-                            {% if post4.photo %}
-                            <a href="{{ post4.get_absolute_url }}"><img class="card-img-top"
-                                              src="{{ post4.photo.url }}" alt="{{ post4.title }}"/></a>
-                            {% else %}
-                                <a href="#!"><img class="card-img-top"
-                                              src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..."/></a>
-                            {% endif %}
-                            <div class="card-body">
-                                <div class="small text-muted">{{ post4.time_create | date:"j M Y" }}</div>
-                                <h2 class="card-title h4">{{ post4.title | truncatechars:18 }}</h2>
-                                <p class="card-text">{{ post4.text | truncatechars:250 }}</p>
-                                <a class="btn btn-primary" href="{{ post4.get_absolute_url }}">Read more →</a>
+                                <div class="small text-muted">{{ post.time_create | date:'j M Y' }}</div>
+                                <h2 class="card-title h4">{{ post.title|truncatechars:28 }}</h2>
+                                <p class="card-text">{{ post.text|truncatechars:150 }}</p>
+                                <a class="btn btn-primary" href="{{ post.get_absolute_url }}">Read more →</a>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
+                {% endfor %}
                 </div>
+
                 <!-- Pagination-->
                 <nav aria-label="Pagination">
                     <hr class="my-0"/>
@@ -126,17 +77,7 @@
 
             <!-- Side widgets-->
             <div class="col-lg-4">
-                <!-- Search widget-->
-                <div class="card mb-4">
-                    <div class="card-header">Search</div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Enter search term..."
-                                   aria-label="Enter search term..." aria-describedby="button-search"/>
-                            <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                        </div>
-                    </div>
-                </div>
+
 
                 <!-- Categories widget-->
                 {% categories_widget %}
