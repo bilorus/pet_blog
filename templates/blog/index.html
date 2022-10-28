@@ -1,0 +1,97 @@
+{% extends 'blog/base.html' %}
+{% load blog_tags %}
+
+{% block page_head %}
+    <!-- Page header with logo and tagline-->
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Welcome to PET Blog!</h1>
+                <p class="lead mb-0">Here I will put key information about this project</p>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block page_content %}
+    <!-- Page content-->
+    <div class="container">
+        <div class="row">
+            <!-- Blog entries-->
+
+            <div class="col-lg-8">
+                <!-- Featured blog post-->
+                <div class="card mb-4">
+                    {% if featured.photo %}
+                        <a href="{{ featured.get_absolute_url }}"><img class="card-img-top"
+                                                                       src="{{ featured.photo.url }}"
+                                                                       alt="{{ featured.title }}"/></a>
+                    {% else %}
+                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
+                                          alt="..."/></a>
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="small text-muted">{{ featured.time_create | date:"j M Y" }}</div>
+                        <h2 class="card-title">{{ featured.title }}</h2>
+                        <p class="card-text">{{ featured.text | truncatewords:150 }}</p>
+                        <a class="btn btn-primary" href="{{ featured.get_absolute_url }}">Read more →</a>
+                    </div>
+                </div>
+
+                <!-- Nested row for non-featured blog posts-->
+                <div class="row">
+                {% for row in row_posts %}
+                    {% for post in row %}
+                    <div class="col-lg-6">
+                        <!-- Blog post-->
+                        <div class="card mb-4">
+                            <a href="{{ post.get_absolute_url }}"><img class="card-img-top"
+                                              src="{{ post.photo.url }}" alt="{{ post.title }}"/></a>
+                            <div class="card-body">
+                                <div class="small text-muted">{{ post.time_create | date:'j M Y' }}</div>
+                                <h2 class="card-title h4">{{ post.title|truncatechars:28 }}</h2>
+                                <p class="card-text">{{ post.text|truncatechars:150 }}</p>
+                                <a class="btn btn-primary" href="{{ post.get_absolute_url }}">Read more →</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endfor %}
+                </div>
+
+                <!-- Pagination-->
+                <nav aria-label="Pagination">
+                    <hr class="my-0"/>
+                    <ul class="pagination justify-content-center my-4">
+                        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+                        </li>
+                        <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Side widgets-->
+            <div class="col-lg-4">
+
+
+                <!-- Categories widget-->
+                {% categories_widget %}
+
+
+                <!-- Side widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Side Widget</div>
+                    <div class="card-body">You can put anything you want inside of these side widgets. They are easy to
+                        use, and feature the Bootstrap 5 card component!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
