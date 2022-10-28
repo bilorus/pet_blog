@@ -1,5 +1,6 @@
 from math import ceil
 
+from django.http import Http404
 from django.shortcuts import render
 
 from .models import *
@@ -13,19 +14,19 @@ menu = [
 
 
 def index(request):
-    posts = Post.objects.order_by('-time_create')[1:5]
+    posts = Post.objects.order_by('-time_create')[:5]
     indx_half_categories = ceil(len(Category.objects.all()) / 2)
     categories_1half = Category.objects.all()[:indx_half_categories]
     categories_2half = Category.objects.all()[indx_half_categories:]
-    featured = Post.objects.get(pk=7)
+    featured = posts[0]  # The newest post
 
     context = {
         'title': 'PET Blog',
         'menu': menu,
-        'post1': posts[0],
-        'post2': posts[1],
-        'post3': posts[2],
-        'post4': posts[3],
+        'post1': posts[1],
+        'post2': posts[2],
+        'post3': posts[3],
+        'post4': posts[4],
         'featured': featured,
         'categories_1': categories_1half,
         'categories_2': categories_2half
@@ -44,6 +45,9 @@ def category(request, cat_id):
         'post4': posts[1],
         'featured': posts[0],
     }
+    if len(posts) == 0:
+        raise Http404
+
     return render(request, 'blog/index.html', context=context)
 
 

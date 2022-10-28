@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load blog_tags %}
 
 {% block page_head %}
     <!-- Page header with logo and tagline-->
@@ -20,8 +21,13 @@
             <div class="col-lg-8">
                 <!-- Featured blog post-->
                 <div class="card mb-4">
-                    <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
+                    {% if featured.photo %}
+                        <a href="{{ featured.get_absolute_url }}"><img class="card-img-top" src="{{ featured.photo.url }}"
+                                      alt="{{ featured.title }}"/></a>
+                    {% else %}
+                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
                                       alt="..."/></a>
+                    {% endif %}
                     <div class="card-body">
                         <div class="small text-muted">{{ featured.time_create | date:"j M Y" }}</div>
                         <h2 class="card-title">{{ featured.title }}</h2>
@@ -35,8 +41,13 @@
                     <div class="col-lg-6">
                         <!-- Blog post-->
                         <div class="card mb-4">
-                            <a href="#!"><img class="card-img-top"
+                            {% if post1.photo %}
+                            <a href="{{ post1.get_absolute_url }}"><img class="card-img-top"
+                                              src="{{ post1.photo.url }}" alt="{{ post1.title }}"/></a>
+                            {% else %}
+                                <a href="#!"><img class="card-img-top"
                                               src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..."/></a>
+                            {% endif %}
                             <div class="card-body">
                                 <div class="small text-muted">{{ post1.time_create | date:"j M Y" }}</div>
                                 <h2 class="card-title h4">{{ post1.title | truncatechars:18 }}</h2>
@@ -46,8 +57,13 @@
                         </div>
                         <!-- Blog post-->
                         <div class="card mb-4">
-                            <a href="#!"><img class="card-img-top"
+                            {% if post2.photo %}
+                            <a href="{{ post1.get_absolute_url }}"><img class="card-img-top"
+                                              src="{{ post2.photo.url }}" alt="{{ post2.title }}"/></a>
+                            {% else %}
+                                <a href="#!"><img class="card-img-top"
                                               src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..."/></a>
+                            {% endif %}
                             <div class="card-body">
                                 <div class="small text-muted">{{ post2.time_create | date:"j M Y" }}</div>
                                 <h2 class="card-title h4">{{ post2.title | truncatechars:18 }}</h2>
@@ -60,9 +76,14 @@
                     <div class="col-lg-6">
                         <!-- Blog post-->
                         <div class="card mb-4">
-                            <a href="#!"><img class="card-img-top"
+                            {% if post3.photo %}
+                            <a href="{{ post3.get_absolute_url }}"><img class="card-img-top"
+                                              src="{{ post3.photo.url }}" alt="{{ post3.title }}"/></a>
+                            {% else %}
+                                <a href="#!"><img class="card-img-top"
                                               src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..."/></a>
-                            <div class="card-body">
+                            {% endif %}
+                           <div class="card-body">
                                 <div class="small text-muted">{{ post3.time_create | date:"j M Y" }}</div>
                                 <h2 class="card-title h4">{{ post3.title | truncatechars:18 }}</h2>
                                 <p class="card-text">{{ post3.text | truncatechars:250 }}</p>
@@ -71,8 +92,13 @@
                         </div>
                         <!-- Blog post-->
                         <div class="card mb-4">
-                            <a href="#!"><img class="card-img-top"
+                            {% if post4.photo %}
+                            <a href="{{ post4.get_absolute_url }}"><img class="card-img-top"
+                                              src="{{ post4.photo.url }}" alt="{{ post4.title }}"/></a>
+                            {% else %}
+                                <a href="#!"><img class="card-img-top"
                                               src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..."/></a>
+                            {% endif %}
                             <div class="card-body">
                                 <div class="small text-muted">{{ post4.time_create | date:"j M Y" }}</div>
                                 <h2 class="card-title h4">{{ post4.title | truncatechars:18 }}</h2>
@@ -113,27 +139,7 @@
                 </div>
 
                 <!-- Categories widget-->
-                <div class="card mb-4">
-                    <div class="card-header">Categories</div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <ul class="list-unstyled mb-0">
-                                    {% for cat in categories_1 %}
-                                    <li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <div class="col-sm-6">
-                                <ul class="list-unstyled mb-0">
-                                    {% for cat in categories_2 %}
-                                    <li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% categories_widget %}
 
 
                 <!-- Side widget-->
