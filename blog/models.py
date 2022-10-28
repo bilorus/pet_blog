@@ -5,6 +5,7 @@ from django.urls import reverse
 class Post(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField(blank=True)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     category = models.ForeignKey('Category', on_delete=models.PROTECT)
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/')
     time_create = models.DateTimeField(auto_now_add=True)
@@ -20,6 +21,7 @@ class Post(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=150, db_index=True)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
     def __str__(self):
         return self.name
