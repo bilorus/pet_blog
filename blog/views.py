@@ -3,13 +3,6 @@ from django.shortcuts import render
 
 from .models import *
 
-menu = [
-    {'title': 'PET Blog', 'url_name': 'home'},
-    {'title': 'About', 'url_name': 'about'},
-    {'title': 'Contacts', 'url_name': 'contact'},
-    {'title': 'Log in', 'url_name': 'login'},
-]
-
 
 def index(request):
     posts = Post.objects.order_by('-time_create')
@@ -19,7 +12,6 @@ def index(request):
 
     context = {
         'title': 'PET Blog',
-        'menu': menu,
         'row_posts': row_posts,
         'featured': featured,
     }
@@ -32,7 +24,6 @@ def category(request, cat_id):
     featured = posts[0]
     context = {
         'title': 'PET Blog',
-        'menu': menu,
         'row_posts': row_posts,
         'featured': featured,
     }
@@ -45,7 +36,6 @@ def category(request, cat_id):
 def about(request):
     context = {
         'title': 'About',
-        'menu': menu
     }
     return render(request, 'blog/about.html', context=context)
 
@@ -53,7 +43,6 @@ def about(request):
 def contact(request):
     context = {
         'title': 'Contacts',
-        'menu': menu
     }
     return render(request, 'blog/contact.html', context=context)
 
@@ -61,7 +50,6 @@ def contact(request):
 def login(request):
     context = {
         'title': 'Log in',
-        'menu': menu
     }
     return render(request, 'blog/login.html', context=context)
 
@@ -70,7 +58,6 @@ def show_post(request, post_id):
     post = Post.objects.get(pk=post_id)
     context = {
         'title': post.title,
-        'menu': menu,
         'post': post,
 
     }
