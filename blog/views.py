@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import *
 
@@ -18,8 +18,9 @@ def index(request):
     return render(request, 'blog/index.html', context=context)
 
 
-def category(request, cat_id):
-    posts = Post.objects.filter(category=cat_id).order_by('-time_create')
+def category(request, cat_slug):
+    category = Category.objects.get(slug=cat_slug).pk  # Get categoru pk for filter
+    posts = Post.objects.filter(category=category).order_by('-time_create')
     row_posts = [posts[1:][i:i + 2] for i in range(0, len(posts[1:]), 2)]
     featured = posts[0]
     context = {
@@ -54,8 +55,8 @@ def login(request):
     return render(request, 'blog/login.html', context=context)
 
 
-def show_post(request, post_id):
-    post = Post.objects.get(pk=post_id)
+def show_post(request, post_slug):
+    post = get_object_or_404(Post, slug=post_slug)
     context = {
         'title': post.title,
         'post': post,
