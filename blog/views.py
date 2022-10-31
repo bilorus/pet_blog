@@ -1,6 +1,7 @@
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
+from .form import *
 from .models import *
 
 
@@ -63,3 +64,19 @@ def show_post(request, post_slug):
 
     }
     return render(request, 'blog/blogpage.html', context=context)
+
+
+def add_post(request):
+    if request.method == 'POST':
+        form = AddPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = AddPostForm()
+
+    context = {
+        'title': 'Add Post',
+        'form': form
+    }
+    return render(request, 'blog/add_post.html', context=context)

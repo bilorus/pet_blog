@@ -20,6 +20,7 @@ def categories_widget():
 def responsive_navbar(title):
     menu = [
         {'title': 'PET Blog', 'url_name': 'home'},
+        {'title': 'Add Post', 'url_name': 'add_post'},
         {'title': 'About', 'url_name': 'about'},
         {'title': 'Contacts', 'url_name': 'contact'},
         {'title': 'Log in', 'url_name': 'login'},
