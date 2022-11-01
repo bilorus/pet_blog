@@ -36,21 +36,38 @@ class PostHome(ListView):
 #     }
 #     return render(request, 'blog/index.html', context=context)
 
+class CategoryView(ListView):
+    model = Post
+    template_name = 'blog/index.html'
+    context_object_name = 'posts'
 
-def category(request, cat_slug):
-    category = Category.objects.get(slug=cat_slug).pk  # Get categoru pk for filter
-    posts = Post.objects.filter(category=category).order_by('-time_create')
-    row_posts = [posts[1:][i:i + 2] for i in range(0, len(posts[1:]), 2)]
-    featured = posts[0]
-    context = {
-        'title': 'PET Blog',
-        'row_posts': row_posts,
-        'featured': featured,
-    }
-    if len(posts) == 0:
-        raise Http404
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        posts = self.get_queryset()
+        # context['title'] = pass
+        context['featured'] = posts[0]
+        context['row_posts'] = [posts[1:][i:i + 2] for i in
+                                range(0, len(posts[1:]), 2)]  # Breaking posts into pairs first post for featured
+        return context
 
-    return render(request, 'blog/index.html', context=context)
+    def get_queryset(self):
+        return Post.objects.filter(category__slug=self.kwargs['cat_slug'], is_published=True)
+
+
+# def category(request, cat_slug):
+#     category = Category.objects.get(slug=cat_slug).pk  # Get categoru pk for filter
+#     posts = Post.objects.filter(category=category).order_by('-time_create')
+#     row_posts = [posts[1:][i:i + 2] for i in range(0, len(posts[1:]), 2)]
+#     featured = posts[0]
+#     context = {
+#         'title': 'PET Blog',
+#         'row_posts': row_posts,
+#         'featured': featured,
+#     }
+#     if len(posts) == 0:
+#         raise Http404
+#
+#     return render(request, 'blog/index.html', context=context)
 
 
 def about(request):
