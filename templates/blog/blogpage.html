@@ -18,7 +18,12 @@
                             <a class="badge bg-secondary text-decoration-none link-light" href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
                         </header>
                         <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="{{ post.photo.url }}" alt="{{ post.title }}" /></figure>
+                        {% if post.photo %}
+                            <figure class="mb-4"><img class="img-fluid rounded" src="{{ post.photo.url }}" alt="{{ post.title }}" /></figure>
+                        {% else %}
+                            <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
+                                          alt="..."/></a>
+                        {% endif %}
                         <!-- Post content-->
                         <section class="mb-5">
                             <p class="fs-5 mb-4">{{ post.text | linebreaks }}</p>
