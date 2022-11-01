@@ -1,22 +1,40 @@
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView
 
 from .form import *
 from .models import *
 
 
-def index(request):
-    posts = Post.objects.order_by('-time_create')
-    row_posts = [posts[1:][i:i + 2] for i in
-                 range(0, len(posts[1:]), 2)]  # Breaking posts into pairs first post for featured
-    featured = posts[0]  # The newest post
+class PostHome(ListView):
+    model = Post
+    template_name = 'blog/index.html'
+    context_object_name = 'posts'
 
-    context = {
-        'title': 'PET Blog',
-        'row_posts': row_posts,
-        'featured': featured,
-    }
-    return render(request, 'blog/index.html', context=context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        posts = self.get_queryset()
+        context['title'] = 'PET Blog'
+        context['featured'] = posts[0]
+        context['row_posts'] = [posts[1:][i:i + 2] for i in range(0, len(posts[1:]), 2)]  # Breaking posts into pairs first post for featured
+        return context
+
+    def get_queryset(self):
+        return Post.objects.filter(is_published=True)
+
+
+# def index(request):
+#     posts = Post.objects.order_by('-time_create')
+#     row_posts = [posts[1:][i:i + 2] for i in
+#                  range(0, len(posts[1:]), 2)]  # Breaking posts into pairs first post for featured
+#     featured = posts[0]  # The newest post
+#
+#     context = {
+#         'title': 'PET Blog',
+#         'row_posts': row_posts,
+#         'featured': featured,
+#     }
+#     return render(request, 'blog/index.html', context=context)
 
 
 def category(request, cat_slug):
