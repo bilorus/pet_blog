@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 
@@ -14,7 +15,7 @@ class PostHome(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='PET Blog')
-        return dict(list(context.items()) + list(c_def.items()))
+        return {**context, **c_def}
 
     def get_queryset(self):
         return Post.objects.filter(is_published=True)
@@ -28,7 +29,7 @@ class CategoryView(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Category: ' + str(context['posts'][0].category))
-        return dict(list(context.items()) + list(c_def.items()))
+        return {**context, **c_def}
 
     def get_queryset(self):
         return Post.objects.filter(category__slug=self.kwargs['cat_slug'], is_published=True)
@@ -67,7 +68,8 @@ class ShowPost(DetailView):
         return context
 
 
-class AddPost(CreateView):
+class AddPost(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
     form_class = AddPostForm
     template_name = 'blog/add_post.html'
 
