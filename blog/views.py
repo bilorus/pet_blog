@@ -1,41 +1,35 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 
 from .form import *
 from .models import *
+from .utils import DataMixin
 
 
-class PostHome(ListView):
+class PostHome(DataMixin, ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'posts'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        posts = self.get_queryset()
-        context['title'] = 'PET Blog'
-        context['featured'] = posts[0]
-        context['row_posts'] = [posts[1:][i:i + 2] for i in
-                                range(0, len(posts[1:]), 2)]  # Breaking posts into pairs first post for featured
-        return context
+        c_def = self.get_user_context(title='PET Blog')
+        return {**context, **c_def}
 
     def get_queryset(self):
         return Post.objects.filter(is_published=True)
 
 
-class CategoryView(ListView):
+class CategoryView(DataMixin, ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'posts'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        posts = self.get_queryset()
-        context['title'] = 'Category: ' + str(context['posts'][0].category)
-        context['featured'] = posts[0]
-        context['row_posts'] = [posts[1:][i:i + 2] for i in
-                                range(0, len(posts[1:]), 2)]  # Breaking posts into pairs first post for featured
-        return context
+        c_def = self.get_user_context(title='Category: ' + str(context['posts'][0].category))
+        return {**context, **c_def}
 
     def get_queryset(self):
         return Post.objects.filter(category__slug=self.kwargs['cat_slug'], is_published=True)
@@ -74,7 +68,8 @@ class ShowPost(DetailView):
         return context
 
 
-class AddPost(CreateView):
+class AddPost(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
     form_class = AddPostForm
     template_name = 'blog/add_post.html'
 
