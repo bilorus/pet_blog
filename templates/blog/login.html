@@ -1,1 +1,65 @@
 {% extends 'blog/base.html' %}
+{% load blog_tags %}
+
+
+{% block page_head %}
+    <!-- Page header with logo and tagline-->
+    <header class="bg-light border-bottom border-top mb-4">
+        <div class="container-sm">
+            <div class="text-decoration-none my-5">
+                <h1 class="fw-bolder">Register</h1>
+                <p class="lead mb-0">You can register with common validation rules.<br>User will add to database, after that you can rate and comment posts and create your own!</p>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block page_content %}
+
+    <!-- Page content-->
+    <div class="container-sm mt-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Add Post Form-->
+{#<form>#}
+{#  <div class="mb-3">#}
+{#    <label for="exampleInputEmail1" class="form-label">Email address</label>#}
+{#    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">#}
+{#    <div id="emailHelp" class="form-text">Can be fake, but be sure, you use @ and .com</div>#}
+{#  </div>#}
+{#  <div class="mb-3">#}
+{#    <label for="exampleInputPassword1" class="form-label">Password</label>#}
+{#    <input type="password" class="form-control" id="exampleInputPassword1">#}
+{#  </div>#}
+{#  <div class="mb-3 form-check">#}
+{#    <input type="checkbox" class="form-check-input" id="exampleCheck1">#}
+{#    <label class="form-check-label" for="exampleCheck1">Check me out</label>#}
+{#  </div>#}
+{#  <button type="submit" class="btn btn-primary">Submit</button>#}
+{#</form>#}
+
+                <form method="post" class="form-control">
+                    {% csrf_token %}
+                    <br>
+                    {% for f in form %}
+                        <p><label class="col-form-label-lg" for="{{ f.id_for_label }}">{{ f.label }}: </label> {{ f }}</p>
+                        <div class="row-form-errors">{{ f.errors }}</div>
+                    {% endfor %}
+                    <br>
+                    <br>
+                    <button class='btn btn-primary' type="submit">Login</button>
+                </form>
+            <br>
+            <br>
+            </div>
+
+            <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Categories widget-->
+                {% categories_widget %}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
