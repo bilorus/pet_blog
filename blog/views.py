@@ -1,4 +1,4 @@
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
@@ -38,25 +38,12 @@ class CategoryView(DataMixin, ListView):
         return Post.objects.filter(category__slug=self.kwargs['cat_slug'], is_published=True)
 
 
-def about(request):
-    context = {
-        'title': 'About',
-    }
-    return render(request, 'blog/about.html', context=context)
-
 
 def contact(request):
     context = {
         'title': 'Contacts',
     }
     return render(request, 'blog/contact.html', context=context)
-
-
-def login(request):
-    context = {
-        'title': 'Log in',
-    }
-    return render(request, 'blog/register.html', context=context)
 
 
 class ShowPost(DetailView):
@@ -68,6 +55,7 @@ class ShowPost(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.get_object().title
+        context['request'] = self.request
         return context
 
 
@@ -79,6 +67,7 @@ class AddPost(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Add Post'
+        context['request'] = self.request
         return context
 
 
@@ -92,11 +81,19 @@ class RegisterUser(DataMixin, CreateView):
         context['title'] = 'Register'
         return context
 
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
 
 class LoginUser(DataMixin, LoginView):
     form_class = LoginUserForm
     template_name = 'blog/login.html'
     extra_context = {'title': 'Log in'}
+
+    def get_success_url(self):
+        return reverse_lazy('home')
 
 
 def logout_user(request):

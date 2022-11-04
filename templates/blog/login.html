@@ -6,41 +6,39 @@
 {% block page_head %}
     <!-- Page header with logo and tagline-->
     <header class="bg-light border-bottom border-top mb-4">
-        <div class="container">
+        <div class="container-sm">
             <div class="text-decoration-none my-5">
-                <h1 class="fw-bolder">Post here!</h1>
-                <p class="lead mb-0">Here you can create blog-post that will be saved
-                    and shown to anyone who wants to watch.<br>The recommended image size for a post is 700x350.</p>
+                <h1 class="fw-bolder">Login</h1>
+                <p class="lead mb-0">Use your data if already registered<br>Or feel free to use Login: <strong>Guest</strong> Password: <strong>Petblog777</strong> to see how the site is working</p>
             </div>
         </div>
     </header>
 {% endblock %}
 
-
-
 {% block page_content %}
 
     <!-- Page content-->
-    <div class="container mt-5">
+    <div class="container-sm mt-5">
         <div class="row">
             <div class="col-lg-8">
                 <!-- Add Post Form-->
-
-                <form action="{% url 'add_post' %}" method="POST" enctype="multipart/form-data">
+                <form method="post" class="form-control">
                     {% csrf_token %}
-                    <div>{{ form.non_field_errors }}</div>
                     {% crispy form %}
-                    {#                    {{ form.as_p }}#}
-{#                    <button class='btn btn-primary' type="submit">Add post</button>#}
+{#                    {% for f in form %}#}
+{#                        <p><label class="col-form-label-lg" for="{{ f.id_for_label }}">{{ f.label }}: </label> {{ f }}</p>#}
+{#                        <div class="row-form-errors">{{ f.errors }}</div>#}
+{#                    {% endfor %}#}
                 </form>
-                <br>
+            <br>
+            <br>
             </div>
 
             <!-- Side widgets-->
 {#            <div class="col-lg-4">#}
 {#                <!-- Categories widget-->#}
 {#                {% categories_widget %}#}
-            </div>
+{#            </div>#}
 
         </div>
     </div>
