@@ -1,6 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.contrib.auth.views import LoginView
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 
@@ -55,7 +56,7 @@ def login(request):
     context = {
         'title': 'Log in',
     }
-    return render(request, 'blog/login.html', context=context)
+    return render(request, 'blog/register.html', context=context)
 
 
 class ShowPost(DetailView):
@@ -83,10 +84,21 @@ class AddPost(LoginRequiredMixin, CreateView):
 
 class RegisterUser(DataMixin, CreateView):
     form_class = RegisterUserForm
-    template_name = 'blog/login.html'
+    template_name = 'blog/register.html'
     success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Log in'
+        context['title'] = 'Register'
         return context
+
+
+class LoginUser(DataMixin, LoginView):
+    form_class = LoginUserForm
+    template_name = 'blog/login.html'
+    extra_context = {'title': 'Log in'}
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')

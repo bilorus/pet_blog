@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% load blog_tags %}
-
+{% load crispy_forms_tags %}
 
 
 {% block page_head %}
@@ -29,8 +29,9 @@
                 <form action="{% url 'add_post' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div>{{ form.non_field_errors }}</div>
-                    {{ form.as_p }}
-                    <button class='btn btn-primary' type="submit">Add post</button>
+                    {% crispy form %}
+                    {#                    {{ form.as_p }}#}
+{#                    <button class='btn btn-primary' type="submit">Add post</button>#}
                 </form>
                 <br>
             </div>
