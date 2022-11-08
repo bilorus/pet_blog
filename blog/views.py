@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView
 
 from .form import *
@@ -63,6 +64,7 @@ class AddPost(LoginRequiredMixin, CreateView):
     login_url = '/login/'
     form_class = AddPostForm
     template_name = 'blog/add_post.html'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

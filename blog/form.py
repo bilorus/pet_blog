@@ -2,7 +2,6 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, HTML
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
 
 from .models import *
 
@@ -16,13 +15,22 @@ class AddPostForm(forms.ModelForm):
             Fieldset(
                 'Add Post',
                 'title',
+                'slug',
                 'text',
+                HTML('<br>'),
                 'photo',
+                HTML('<br>'),
                 'category',
+                HTML('<br>'),
                 'is_published',
                 HTML('<br><br>'),
-                Submit('register', 'Register'),
+                Submit('submit', 'Post'),
             ))
+
+    class Meta:
+        model = Post
+        fields = ['title', 'slug', 'text', 'photo', 'category', 'is_published']
+
 
     # class Meta:
     #     model = Post
@@ -51,14 +59,12 @@ class RegisterUserForm(UserCreationForm):
                 Submit('register', 'Register'),
             ))
 
-
     # class Meta:
     #     username = forms.CharField(label='Login', widget=forms.TextInput(attrs={'class': 'form-control'}))
     #     # email = forms.EmailField(label='Email address', widget=forms.EmailInput(attrs={'class': 'form-control'}))
     #     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     #     password2 = forms.CharField(label='Repeat Password',
     #                                 widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-
 
 
 class LoginUserForm(AuthenticationForm):
@@ -70,9 +76,9 @@ class LoginUserForm(AuthenticationForm):
                 'Login',
                 'username',
                 'password',
-            HTML('<br><br>'),
-            Submit('login', 'Login'),
-        ))
+                HTML('<br><br>'),
+                Submit('login', 'Login'),
+            ))
 
     # username = forms.CharField(label='Login', widget=forms.TextInput())
     # password = forms.CharField(label='Password', widget=forms.PasswordInput())

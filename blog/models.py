@@ -7,10 +7,10 @@ class Post(models.Model):
     text = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     category = models.ForeignKey('Category', on_delete=models.PROTECT)
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d/')
+    photo = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Image')
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
-    is_published = models.BooleanField(default=True, verbose_name='published')
+    is_published = models.BooleanField(default=True, verbose_name='Published')
 
     def __str__(self):
         return self.title
