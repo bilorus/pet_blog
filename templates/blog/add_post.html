@@ -1,11 +1,11 @@
 {% extends 'blog/base.html' %}
 {% load blog_tags %}
-
+{% load crispy_forms_tags %}
 
 
 {% block page_head %}
     <!-- Page header with logo and tagline-->
-    <header class="py-5 bg-light border-bottom mb-4">
+    <header class="bg-light border-bottom border-top mb-4">
         <div class="container">
             <div class="text-decoration-none my-5">
                 <h1 class="fw-bolder">Post here!</h1>
@@ -29,19 +29,20 @@
                 <form action="{% url 'add_post' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div>{{ form.non_field_errors }}</div>
-                    {{ form.as_p }}
-                    <button class='btn btn-primary' type="submit">Add post</button>
+                    {% crispy form %}
+                    {#                    {{ form.as_p }}#}
+                    {#                    <button class='btn btn-primary' type="submit">Add post</button>#}
                 </form>
                 <br>
             </div>
 
             <!-- Side widgets-->
-            <div class="col-lg-4">
-                <!-- Categories widget-->
-                {% categories_widget %}
-            </div>
-
+            {#            <div class="col-lg-4">#}
+            {#                <!-- Categories widget-->#}
+            {#                {% categories_widget %}#}
         </div>
+
+    </div>
     </div>
 
 {% endblock %}

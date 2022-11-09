@@ -1,22 +1,32 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField(blank=True)
-    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
+    slug = models.SlugField(max_length=255, unique=True, verbose_name='URL', editable=True)
     category = models.ForeignKey('Category', on_delete=models.PROTECT)
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d/')
+    photo = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Image')
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
-    is_published = models.BooleanField(default=True, verbose_name='published')
+    is_published = models.BooleanField(default=True, verbose_name='Published')
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('post', kwargs={'post_slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            new_slug = slugify(self.title)
+            all_slugs = Post.objects.values('slug')
+            while any(map(lambda item: item['slug'] == new_slug, all_slugs)):
+                new_slug += '-1'
+            self.slug = new_slug
+        return super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['-time_create', 'title']

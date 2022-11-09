@@ -1,13 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'contact' %}">Hire me</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             {% block navbar %}
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                <ul class="navbar-nav mb-2 mb-lg-0">
                     {% for m in menu %}
                         {% if  title != m.title %}
                             <li class="nav-item"><a class="nav-link" href="{% url m.url_name %}">{{ m.title }}</a></li>
@@ -15,9 +11,32 @@
                             <li class="nav-item"><a class="nav-link active" aria-current="page"
                                                     href="{% url m.url_name %}">{{ m.title }}</a></li>
                         {% endif %}
-
                     {% endfor %}
+                </ul>
 
+
+                <ul class="navbar-nav mb-2 ms-auto mb-lg-0">
+                    {% if request.user.is_authenticated %}
+                        {% for m in user_in %}
+                            {% if  title != m.title %}
+                                <li class="nav-item"><a class="nav-link" href="{% url m.url_name %}">{{ m.title }}</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                                        href="{% url m.url_name %}">{{ m.title }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {% for m in user_out %}
+                            {% if  title != m.title %}
+                                <li class="nav-item"><a class="nav-link" href="{% url m.url_name %}">{{ m.title }}</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                                        href="{% url m.url_name %}">{{ m.title }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                 </ul>
             {% endblock %}
         </div>
