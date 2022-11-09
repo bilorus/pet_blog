@@ -10,12 +10,13 @@ class AddPostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['category'].empty_label = 'Choose category'
+
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
             Fieldset(
                 'Add Post',
                 'title',
-                'slug',
+                # 'slug',
                 'text',
                 HTML('<br>'),
                 'photo',
@@ -27,18 +28,15 @@ class AddPostForm(forms.ModelForm):
                 Submit('submit', 'Post'),
             ))
 
+    # def clean(self):
+    #     self.cleaned_data = super().clean()
+    #     slug = slugify(self.cleaned_data.get('title'))
+    #     self.cleaned_data['slug'] = slug
+    #     return self.cleaned_data
+
     class Meta:
         model = Post
-        fields = ['title', 'slug', 'text', 'photo', 'category', 'is_published']
-
-
-    # class Meta:
-    #     model = Post
-    #     fields = ['title', 'slug', 'text', 'photo', 'category', 'is_published']
-    #     widgets = {
-    #         'title': forms.TextInput(attrs={'class': 'form-input'}),
-    #         'text': forms.Textarea(attrs={'cols': 60, 'rows': 12}),
-    #     }
+        fields = ['title', 'text', 'photo', 'category', 'is_published']
 
 
 class RegisterUserForm(UserCreationForm):
@@ -59,13 +57,6 @@ class RegisterUserForm(UserCreationForm):
                 Submit('register', 'Register'),
             ))
 
-    # class Meta:
-    #     username = forms.CharField(label='Login', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    #     # email = forms.EmailField(label='Email address', widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    #     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    #     password2 = forms.CharField(label='Repeat Password',
-    #                                 widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-
 
 class LoginUserForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -79,6 +70,3 @@ class LoginUserForm(AuthenticationForm):
                 HTML('<br><br>'),
                 Submit('login', 'Login'),
             ))
-
-    # username = forms.CharField(label='Login', widget=forms.TextInput())
-    # password = forms.CharField(label='Password', widget=forms.PasswordInput())
