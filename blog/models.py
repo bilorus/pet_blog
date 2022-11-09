@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -5,6 +6,7 @@ from django.utils.text import slugify
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     text = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, unique=True, verbose_name='URL', editable=True)
     category = models.ForeignKey('Category', on_delete=models.PROTECT)
