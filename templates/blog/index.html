@@ -7,7 +7,11 @@
         <div class="container">
             <div class="text-center my-5">
                 <h1 class="fw-bolder">Welcome to PET Blog!</h1>
-                <p class="lead mb-0">Here I will put key information about this project</p>
+                <div class="lead mb-0">This is the MVP of the blog. Pet blog or pet project made with Django framework.
+                    You can check out registration, user login, posting new posts and writing comments under existing
+                    ones.
+                    In the contacts section, you can find a link to the github with the source code of the product. Also
+                    there you can find links to get in touch with me in a convenient way.</div>
             </div>
         </div>
     </header>
@@ -46,11 +50,13 @@
                                 <!-- Blog post-->
                                 <div class="card mb-4">
                                     {% if post.photo %}
-                                    <a href="{{ post.get_absolute_url }}"><img class="card-img-top"
-                                                                               src="{{ post.photo.url }}"
-                                                                               alt="{{ post.title }}"/></a>
+                                        <a href="{{ post.get_absolute_url }}"><img class="card-img-top"
+                                                                                   src="{{ post.photo.url }}"
+                                                                                   alt="{{ post.title }}"/></a>
                                     {% else %}
-                                    <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                                        <a href="#!"><img class="card-img-top"
+                                                          src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg"
+                                                          alt="..."/></a>
                                     {% endif %}
                                     <div class="card-body">
                                         <div class="small text-muted">{{ post.time_create | date:'j M Y' }}</div>
