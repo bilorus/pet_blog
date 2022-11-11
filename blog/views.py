@@ -110,6 +110,10 @@ class AddPost(LoginRequiredMixin, CreateView):
         context['request'] = self.request
         return context
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 
 class RegisterUser(DataMixin, CreateView):
     form_class = RegisterUserForm
