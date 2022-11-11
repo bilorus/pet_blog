@@ -35,58 +35,41 @@
 
 
                 <!-- Comments section-->
-                <section class="mb-5">
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            {% if not post.comments.all %}
+                <!-- Comment form-->
+                <form class="mb-4 form-control" action="" method="POST">
+                    {% csrf_token %}
+                    <div>{{ form.non_field_errors }}</div>
+                    {{ form.as_div }}
+                    <button class='btn btn-primary m-2' type="submit">Add comment</button>
+                </form>
+                <!-- Single comment-->
+                {% if not post.comments.all %}
 
-                                No comments
-                            {% else %}
-                                {% for comment in post.comments.all %}
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0"><img class="rounded-circle"
-                                                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                                                        alt="..."/></div>
-                                        <div class="ms-3">
-                                            <div class="fw-bold">{{ comment.author }}</div>
-                                            <div class="text-muted fst-italic mb-2">{{ comment.time_create|date:"d M Y" }} {{ comment.time_create|time:"H:i" }}</div>
-                                            {{ comment.text }}
+                {% else %}
+                    {% for comment in post.comments.all %}
+
+                        <section class="mb-2">
+                            <div class="card bg-light">
+                                <div class="card-body">
+
+                                    <div class="card-body">
+
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0"><img class="rounded-circle"
+                                                                            src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                                                                            alt="..."/></div>
+                                            <div class="ms-3">
+                                                <div class="fw-bold">{{ comment.author }}</div>
+                                                <div class="text-muted fst-italic mb-2">{{ comment.time_create|date:"d M Y" }} {{ comment.time_create|time:"H:i" }}</div>
+                                                {{ comment.text }}
+                                            </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                            <!-- Comment form-->
-                            {#                                <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>#}
-                            {#                                <!-- Comment with nested comments-->#}
-                            {#                                <div class="d-flex mb-4">#}
-                            {#                                    <!-- Parent comment-->#}
-                            {#                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>#}
-                            {#                                    <div class="ms-3">#}
-                            {#                                        <div class="fw-bold">Commenter Name</div>#}
-                            {#                                        If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.#}
-                            {#                                        <!-- Child comment 1-->#}
-                            {#                                        <div class="d-flex mt-4">#}
-                            {#                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>#}
-                            {#                                            <div class="ms-3">#}
-                            {#                                                <div class="fw-bold">Commenter Name</div>#}
-                            {#                                                And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.#}
-                            {#                                            </div>#}
-                            {#                                        </div>#}
-                            {#                                        <!-- Child comment 2-->#}
-                            {#                                        <div class="d-flex mt-4">#}
-                            {#                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>#}
-                            {#                                            <div class="ms-3">#}
-                            {#                                                <div class="fw-bold">Commenter Name</div>#}
-                            {#                                                When you put money directly to a problem, it makes a good headline.#}
-                            {#                                            </div>#}
-                            {#                                        </div>#}
-                            {#                                    </div>#}
-                            {#                                </div>#}
-                            <!-- Single comment-->
 
-                        </div>
-                    </div>
-                </section>
+                                    </div>
+                                </div>
+                        </section>
+                    {% endfor %}
+                {% endif %}
             </div>
             <!-- Side widgets-->
             <div class="col-lg-4">

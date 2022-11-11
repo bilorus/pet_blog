@@ -28,15 +28,18 @@ class AddPostForm(forms.ModelForm):
                 Submit('submit', 'Post'),
             ))
 
-    # def clean(self):
-    #     self.cleaned_data = super().clean()
-    #     slug = slugify(self.cleaned_data.get('title'))
-    #     self.cleaned_data['slug'] = slug
-    #     return self.cleaned_data
-
     class Meta:
         model = Post
         fields = ['title', 'text', 'photo', 'category', 'is_published']
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+        widgets = {
+            'text': forms.Textarea(attrs={'cols': 60, 'rows': 3, 'class': "form-control", 'placeholder': "Join the discussion and leave a comment!"})
+        }
 
 
 class RegisterUserForm(UserCreationForm):
