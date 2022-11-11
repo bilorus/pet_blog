@@ -19,5 +19,11 @@ class CategoriesAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'post', 'text', 'time_create')
+    list_display_links = ('text',)
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category, CategoriesAdmin)
+admin.site.register(Comment, CommentAdmin)
