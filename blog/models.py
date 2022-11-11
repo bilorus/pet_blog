@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from unidecode import unidecode
 
 
 class Post(models.Model):
@@ -23,7 +24,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            new_slug = slugify(self.title)
+            new_slug = slugify(unidecode(self.title))
             all_slugs = Post.objects.values('slug')
             while any(map(lambda item: item['slug'] == new_slug, all_slugs)):
                 new_slug += '-1'
