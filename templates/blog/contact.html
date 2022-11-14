@@ -1,1 +1,31 @@
 {% extends 'blog/base.html' %}
+{% load static %}
+
+{% block page_head %}
+    <!-- Page header with logo and tagline-->
+    <header class="bg-light border-bottom border-top mb-4">
+        <div class="container">
+            <div class="text-decoration-none my-5">
+                <h1 class="fw-bolder">My contacts</h1>
+                <p class="lead mb-0">Feel free to connect me of any questions<br>In my GitHub you can find repo <a
+                        href="https://github.com/bilorus/pet_blog">pet_blog</a> suited this site</p>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block page_content %}
+    <div class="container mb-5">
+        <div class="text-decoration-none mb-5">
+            <ul>
+                <li class="mb-2">My email: <a href="mailto:marshak1213@gmail.com">marshak1213@gmail.com</a></li>
+                <li class="mb-2">Telegram: <a href="http:\\t.me/bilorus">@bilorus</a></li>
+                <li class="mb-2">LinkedIn: <a href="https://www.linkedin.com/in/evgeniy-rubtsov/"> Evgeniy Rubtsov</a>
+                </li>
+                <li class="mb-2">Github: <a href="https://github.com/bilorus">bilorus</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+{% endblock %}
