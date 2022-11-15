@@ -14,7 +14,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{% static 'blog/css/styles.css' %}" rel="stylesheet"/>
 </head>
-<body>
+<body style="display: flex; flex-direction: column">
 
 <!-- Responsive navbar-->
 {% responsive_navbar title request %}
@@ -23,14 +23,14 @@
     <!-- Page header with logo and tagline-->
 {% endblock %}
 
-
+<div class="container mt-5 page-container">
 {% block page_content %}
     <!-- Page content-->
 {% endblock %}
-
+</div>
 
 <!-- Footer-->
-<footer class="py-5 {% if title != 'PET Blog'%}fixed-bottom{% endif %} bg-dark">
+<footer class="py-5 bg-dark">
     <div class="container"><p class="m-0 text-center text-white">No Copyright &copy;Website 2022</p></div>
 </footer>
 <!-- Bootstrap core JS-->

@@ -11912,3 +11912,7 @@ textarea.form-control-lg {
         display: none !important;
     }
 }
+
+.page-container{
+    flex-grow: 1;
+}
